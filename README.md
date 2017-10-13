@@ -13,11 +13,13 @@ The current supported permissions are:
 - Push Notifications *(iOS only)*
 - Background Refresh *(iOS only)*
 - Speech Recognition *(iOS only)*
+- Call Phone *(Android Only)*
+- Read/Receive SMS *(Android only)*
 
 
 | Version | React Native Support |
 |---|---|
-| 1.0.0 | 0.40.0 - 0.45.0 |
+| 1.0.1 | 0.40.0 - 0.48.4 |
 | 0.2.7 | 0.40.0 - 0.41.0 |
 | 0.2.5 | 0.33.0 - 0.39.0 |
 *Complies with [react-native-version-support-table](https://github.com/dangnelson/react-native-version-support-table)*
@@ -31,7 +33,7 @@ The current supported permissions are:
 ## General Usage
 ```
 npm install --save react-native-permissions
-rnpm link
+react-native link
 ```
 
 Add permissions to manifest for android and info.plist for ios (xcode >=8). See notes below for more details.
@@ -61,7 +63,7 @@ const Permissions = require('react-native-permissions');
 
   //check the status of multiple permissions
   _checkCameraAndPhotos() {
-    Permissions.check(['camera', 'photo'])
+    Permissions.checkMultiple(['camera', 'photo'])
       .then(response => {
         //response is an object mapping type to permission
         this.setState({
@@ -120,6 +122,9 @@ Promises resolve into one of these statuses
 |`backgroundRefresh`| ✔️ | ❌ |
 |`speechRecognition`| ✔️ | ❌ |
 |`storage`| ❌️ | ✔ |
+|`callPhone`| ❌️ | ✔ |
+|`readSms`| ❌️ | ✔ |
+|`receiveSms`| ❌️ | ✔ |
 
 ### Methods
 | Method Name | Arguments | Notes
@@ -179,10 +184,10 @@ You can request write access to any of these types by also including the appropr
 
 ````
 npm install --save react-native-permissions
-rnpm link
+react-native link
 ````
 
-### Or manualy linking
+### Or manually linking
 
 #### iOS
 * Run open node_modules/react-native-permissions
@@ -207,8 +212,6 @@ So before submitting your app to the `AppStore`, make sure that in your `Info.pl
 <key>NSCameraUsageDescription</key>
 <string>Some description</string>
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>Some description</string>
-<key>NSPhotoLibraryUsageDescription</key>
 <string>Some description</string>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>Some description</string>

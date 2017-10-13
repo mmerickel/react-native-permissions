@@ -12,6 +12,9 @@ const RNPTypes = {
 	event: RNPermissions.PERMISSIONS.READ_CALENDAR,
 	storage: RNPermissions.PERMISSIONS.READ_EXTERNAL_STORAGE,
 	photo: RNPermissions.PERMISSIONS.READ_EXTERNAL_STORAGE,
+	callPhone: RNPermissions.PERMISSIONS.CALL_PHONE,
+	readSms: RNPermissions.PERMISSIONS.READ_SMS,
+	receiveSms: RNPermissions.PERMISSIONS.RECEIVE_SMS,
 }
 
 const RESULTS = {
@@ -67,6 +70,9 @@ class ReactNativePermissions {
 
 		return RNPermissions.request(androidPermission)
 			.then(res => {
+				// RNPermissions.request() to native module resolves to boolean
+				// rather than string if running on OS version prior to Android M 
+				if (typeof res === 'boolean') return res ? 'authorized' : 'denied';
 				return setDidAskOnce(permission)
 					.then(() => RESULTS[res])
 			});
